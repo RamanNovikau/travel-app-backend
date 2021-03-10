@@ -1,0 +1,25 @@
+const express = require('express')
+const bodyParser = require('body-parser');
+var cors = require('cors')
+const app = express()
+app.use(cors())
+const port = process.env.PORT || 3000;
+
+const MongoClient = require("mongodb").MongoClient;
+
+const url = "mongodb+srv://memory-game:ePWMNoNJtnrvZ4dv@cluster0.bsofz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongoClient = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+let dbClient;
+
+mongoClient.connect((err, client) => {
+    if (err) return console.log(err);
+    dbClient = client;
+    app.locals.collection = client.db("travel-app-db").collection("countries ");
+    app.listen(port, function () {
+        console.log("Сервер ожидает подключения...");
+    });
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
