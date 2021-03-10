@@ -14,7 +14,7 @@ let dbClient;
 mongoClient.connect((err, client) => {
     if (err) return console.log(err);
     dbClient = client;
-    app.locals.collection = client.db("travel-app-db").collection("countries ");
+    app.locals.collection = client.db("travel-app-db").collection("countries");
     app.listen(port, function () {
         console.log("Сервер ожидает подключения...");
     });
@@ -22,4 +22,12 @@ mongoClient.connect((err, client) => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.raw());
+app.use(bodyParser.raw());;
+
+app.get('/countries', function (request, response) {
+    const collection = request.app.locals.collection;
+    collection.find({}).toArray(function (err, result) {
+        if (err) throw err;
+        response.send(result);
+    });
+});
