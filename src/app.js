@@ -12,7 +12,7 @@ app.use(bodyParser.raw());
 
 dbConnection();
 
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log('app listening on port 3000!')
 })
 
