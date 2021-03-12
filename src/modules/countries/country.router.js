@@ -3,8 +3,8 @@ const router = express.Router();
 const countryService = require('./country.service');
 
 router.get('/', async (request, response) => {
-    const lang = request.query.lang || 'en';
-    const data = await countryService.getAll(lang);
+    //const lang = request.query.lang || 'en';
+    const data = await countryService.getAll();
     response.send(data);
 });
 

@@ -1,7 +1,7 @@
 const countryRepo = require('./country.repository');
 
-const getAll = async (lang) => {
-    const countries = await countryRepo.getAllByLang(lang);
+const getAll = async () => {
+    const countries = await countryRepo.getAllByLang();
     return countries;
 };
 
