@@ -1,12 +1,8 @@
 
 const { Schema, model } = require('mongoose');
 
-const localeSchema = new Schema({
+const langSchema = new Schema({
     _id: false,
-    lang: {
-        type: String,
-        required: true,
-    },
     name: {
         type: String,
         required: true,
@@ -18,7 +14,23 @@ const localeSchema = new Schema({
     description: {
         type: String,
         required: true,
+    }
+})
+
+const localeSchema = new Schema({
+    _id: false,
+    en: {
+        type: { langSchema },
+        required: true,
     },
+    ru: {
+        type: { langSchema },
+        required: true,
+    },
+    de: {
+        type: { langSchema },
+        required: true,
+    }
 });
 
 const countrySchema = new Schema({
@@ -43,7 +55,10 @@ const countrySchema = new Schema({
     },
     timezones: [],
     flag: String,
-    localizations: [localeSchema],
+    localizations: {
+        type: { localeSchema },
+        required: true,
+    },
 }, { collection: 'countries' });
 
 const Country = model('Country', countrySchema);
