@@ -1,7 +1,8 @@
 const userRepo = require('./user.repository');
 
 const addUser = async (userData) => {
-    await userRepo.addUser(userData);
+    const id = await userRepo.addUser(userData);
+    return id;
 };
 
 const getOneByEmail = async (email) => {

@@ -35,16 +35,13 @@ router.post('/register',
             }
 
             const hashedPassword = await bcrypt.hash(password, 12);
-            console.log(hashedPassword);
-            await userService.addUser({ name, email, password: hashedPassword, userImage });
-            
-            const user = await userService.getOneByEmail({ email });
+            const insertedId = await userService.addUser({ name, email, password: hashedPassword, userImage });
             const token = jwt.sign(
-                { userId: user.id },
+                { userId: insertedId },
                 process.env.JWT_SECRET
             )
 
-            res.status(201).json({ token, userId: user.id, name: user.name, userImage: user.userImage });
+            res.status(201).json({ token, userId: insertedId, name: name, userImage: userImage });
 
         } catch (e) {
             res.status(500).json({ message: 'registerError' })

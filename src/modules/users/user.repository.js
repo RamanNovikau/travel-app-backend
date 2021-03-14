@@ -3,7 +3,8 @@ const { Types } = require('mongoose');
 
 const addUser = async (userData) => {
     const user = new User(userData);
-    user.save();
+    await user.save();
+    return user.id;
 };
 
 const getOneByEmail = async (email) => {
