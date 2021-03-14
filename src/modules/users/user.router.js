@@ -38,7 +38,7 @@ router.post('/register',
             console.log(hashedPassword);
             await userService.addUser({ name, email, password: hashedPassword, userImage });
 
-            res.status(201).json({ message: 'success' });
+            res.status(201).json({ token, userId: user.id, name: user.name, userImage: user.userImage });
 
         } catch (e) {
             res.status(500).json({ message: 'registerError' })
