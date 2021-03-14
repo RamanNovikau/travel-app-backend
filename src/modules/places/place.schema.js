@@ -1,13 +1,31 @@
 const { Schema, model } = require('mongoose');
 
-const placeLocaleSchema = new Schema({
+const langSchema = new Schema({
   _id: false,
-  lang: {
+  description: {
     type: String,
     required: true,
   },
-  name: String,
-  description: String,
+  name: {
+    type: String,
+    required: true,
+  }
+})
+
+const placeLocaleSchema = new Schema({
+  _id: false,
+  en: {
+    type: { langSchema },
+    required: true,
+  },
+  ru: {
+    type: { langSchema },
+    required: true,
+  },
+  de: {
+    type: { langSchema },
+    required: true,
+  }
 });
 
 const placeSchema = new Schema({
@@ -19,7 +37,10 @@ const placeSchema = new Schema({
     type: String,
     require: true,
   },
-  localizations: [placeLocaleSchema],
+  localizations: {
+    type: { placeLocaleSchema },
+    required: true,
+  },
 }, { collection: 'places' });
 
 const Place = model('Place', placeSchema);

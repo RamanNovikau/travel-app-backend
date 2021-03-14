@@ -1,16 +1,22 @@
 const placeRepo = require('./place.repository');
 
-const getAll = async (countryId, lang) => {
-    const places = await placeRepo.getAllByLang(countryId, lang);
+const getAllByCountry = async (countryId) => {
+    const places = await placeRepo.getAllByCountry(countryId);
     return places;
 };
 
-const getOne = async (id, lang) => {
-    const place = await placeRepo.getOneByLang(id, lang);
+const getOne = async (id) => {
+    const place = await placeRepo.getOneByLang(id);
     return place;
 };
 
+const getAll = async (id) => {
+    const places = await placeRepo.getAll();
+    return places;
+};
+
 module.exports = {
-    getAll,
+    getAllByCountry,
     getOne,
+    getAll,
 };

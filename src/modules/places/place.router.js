@@ -1,16 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const placeService = require('./place.service');
-
+const Place = require('./place.schema');
+const { Types } = require('mongoose');
 router.get('/', async (req, res, next) => {
-    const lang = req.query.lang || 'en';
     if (!req.query.country) {
         const err = new Error('Required query params missing');
         err.status = 400;
         next(err);
     }
     const countryId = req.query.country;
-    const data = await placeService.getAll(countryId, lang);
+    const data = await placeService.getAllByCountry(countryId);
+    res.send(data);
+});
+
+router.get('/all', async (req, res, next) => {
+    const data = await placeService.getAll();
+    
     res.send(data);
 });
 
