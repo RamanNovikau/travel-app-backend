@@ -3,10 +3,9 @@ const { Types } = require('mongoose');
 
 const getAllByLang = async () => {
     return Country.find({});
-    // aggregate([{ $unwind: { path: '$localizations' } }, { $match: { "localizations.lang": lang } }]);
 };
 
-const getOneByLang = async (id, lang) => {
+const getOneByLang = async (id) => {
     return Country.aggregate([{ $match: { _id: Types.ObjectId(id) } }]);
 };
 

@@ -5,8 +5,8 @@ const getAll = async () => {
     return countries;
 };
 
-const getOne = async (id, lang) => {
-    const country = await countryRepo.getOneByLang(id, lang);
+const getOne = async (id) => {
+    const country = await countryRepo.getOneByLang(id);
     return country;
 };
 

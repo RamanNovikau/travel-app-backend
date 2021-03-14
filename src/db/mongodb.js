@@ -1,6 +1,10 @@
 
 const mongoose = require('mongoose');
-const url = "mongodb+srv://memory-game:ePWMNoNJtnrvZ4dv@cluster0.bsofz.mongodb.net/travel-app-db";
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+const url = process.env.MONGO_DB_CONNECTION_STRING;
 const dbConnection = () => {
     mongoose
         .connect(url, {
@@ -8,7 +12,7 @@ const dbConnection = () => {
             useUnifiedTopology: true,
             useCreateIndex: true,
         })
-        .catch((err) => logger.error(err.message));
+        .catch((err) => console.log(err.message));
 
     const db = mongoose.connection;
     db.once('open', () => {
