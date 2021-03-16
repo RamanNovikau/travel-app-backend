@@ -1,20 +1,23 @@
-const Place = require('./place.schema');
 const { Types } = require('mongoose');
+const Place = require('./place.schema');
 
-const getAllByCountry = async (countryId, lang) => {
-    return Place.aggregate([{ $match: { countryId: Types.ObjectId(countryId) } }]);
+const getAllByCountry = async (countryId) => {
+  const places = await Place.aggregate([{ $match: { countryId: Types.ObjectId(countryId) } }]);
+  return places;
 };
 
 const getOneByLang = async (lang) => {
-    return Place.aggregate([{ $unwind: { path: '$localizations' } }, { $match: { "localizations.lang": lang } }]);
+  const place = await Place.aggregate([{ $unwind: { path: '$localizations' } }, { $match: { 'localizations.lang': lang } }]);
+  return place;
 };
 
 const getAll = async () => {
-    return Place.find({});
+  const places = Place.find({});
+  return places;
 };
 
 module.exports = {
-    getAllByCountry,
-    getOneByLang, 
-    getAll,
+  getAllByCountry,
+  getOneByLang,
+  getAll
 };
