@@ -77,13 +77,13 @@ router.post(
       const user = await userService.getOneByEmail({ email });
 
       if (!user) {
-        return res.status(400).json({ message: 'userNotExist' });
+        return res.status(400).json({ message: 'wrongInput' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'passwordWrong' });
+        return res.status(401).json({ message: 'wrongInput' });
       }
 
       const token = jwt.sign(
