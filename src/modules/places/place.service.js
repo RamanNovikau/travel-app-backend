@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable max-len */
 const placeRepo = require('./place.repository');
 
 const getAllByCountry = async (countryId) => {
@@ -15,8 +17,25 @@ const getAll = async () => {
   return places;
 };
 
+const getWithAverageRating = async () => {
+  const places = placeRepo.getWithRating().then((data) => {
+    data.forEach((place) => {
+      let average = 0;
+      place.ratings.forEach((rating) => {
+        average += rating.rating;
+      });
+      average /= place.ratings.length;
+      average = average.toFixed(2);
+      place.average = average;
+    });
+    return data.sort((placeA, placeB) => Number(placeB.average) - Number(placeA.average)).slice(0, 10);
+  });
+  return places;
+};
+
 module.exports = {
   getAllByCountry,
   getOne,
-  getAll
+  getAll,
+  getWithAverageRating
 };

@@ -16,8 +16,27 @@ const getAll = async () => {
   return places;
 };
 
+const getWithRating = async () => {
+  const places = await Place.aggregate([
+    {
+      $lookup: {
+        from: 'place-rating',
+        let: { id: '$_id' },
+        pipeline: [{ $match: { $expr: { $eq: ['$placeId', '$$id'] } } },
+          {
+            $project: {
+              _id: 0, userId: 0, placeId: 0, date: 0, comment: 0
+            }
+          }],
+        as: 'ratings'
+      }
+    }, { $match: { 'ratings.1': { $exists: true } } }]);
+  return places;
+};
+
 module.exports = {
   getAllByCountry,
   getOneByLang,
-  getAll
+  getAll,
+  getWithRating
 };

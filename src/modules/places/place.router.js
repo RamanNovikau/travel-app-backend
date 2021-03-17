@@ -19,4 +19,9 @@ router.get('/all', async (req, res) => {
   res.send(data);
 });
 
+router.get('/average-rating', async (req, res) => {
+  const data = await placeService.getWithAverageRating();
+  res.send(data);
+});
+
 module.exports = router;
